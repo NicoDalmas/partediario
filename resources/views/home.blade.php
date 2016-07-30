@@ -21,12 +21,19 @@
 			</div>
 		</div>
 	</div>
+
+	<div id="infowindows"></div>
+
 	 <script>
 		function initMap() {
 		  var map = new google.maps.Map(document.getElementById('map'), {
 		    center: {lat: -32.9497106, lng: -60.6473459},
 		    zoom: 12
 		  });
+
+		    map.data.loadGeoJson('/js/mapa.json');
+
+
 
 		  var drawingManager = new google.maps.drawing.DrawingManager({
 		    drawingMode: google.maps.drawing.OverlayType.MARKER,
