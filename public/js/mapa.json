@@ -36,6 +36,7 @@
                 ]
             },
             "properties": {
+                "id": "1",
                 "name": "Arbolado",
                 "description": "Descripción: Cuadrilla Hernandez<br>Zona/Calle: ZONA 66 - PEATONAL CÓRDOBA DESDE PARAGUAY A LAPRIDA<br>Tipo de trabajo: ESCAMONDA<br>Horario: 8:30 A 12:30<br>Corte de calle: SIN CORTE",
                 "Descripción": "Cuadrilla Hernandez",
@@ -100,6 +101,7 @@
                 ]
             },
             "properties": {
+                "id": "2",
                 "name": "Arbolado",
                 "description": "Descripción: Cuadrilla de Gomez<br><br>Zona/Calle: BLANQUE DESDE DORREGO A OROÑO<br><br>Tipo de trabajo: ESCAMONDA<br>Horario: 7:30 A 12:30<br><br>Corte de calle: CALZADA COMPLETA<br>",
                 "Descripción": "Cuadrilla de Gomez\n",
@@ -144,6 +146,7 @@
                 ]
             },
             "properties": {
+                "id": "3",
                 "name": "MANTELECTRIC",
                 "description": "Descripción: <br>Zona/Calle: ZONA 9 - Sorrento a Casiano<br><br>Tipo de trabajo: Escamonda<br>Horario: 7:30 a12:30 hrs.<br><br>Corte de calle: Total",
                 "Descripción": "",
@@ -188,6 +191,7 @@
                 ]
             },
             "properties": {
+                "id": "4",
                 "name": "COOPERATIVA 4 DE JUNIO\n",
                 "description": "Descripción: <br>Zona/Calle: ZONA 58 - NECOCHEA DESDE DEAN FUNES A RUEDA<br><br>Tipo de trabajo: ESCAMONDA<br>Horario: 8 A 14 hrs.<br><br>Corte de calle: Parcial<br>",
                 "Descripción": "",
@@ -208,6 +212,7 @@
                 ]
             },
             "properties": {
+                "id": "5",
                 "name": "PELLEGRINI 552",
                 "description": "Descripción: MANTELECTRIC<br>X: 5440044.683<br>Y: 6350427.438<br>Tipo de trabajo: EXTRACCION<br>Horario: 7:30 a 12:30 Hrs<br>Corte de calle: CALZADA COMPLETA",
                 "Descripción": "MANTELECTRIC",
@@ -229,6 +234,7 @@
                 ]
             },
             "properties": {
+                "id": "6",
                 "name": "VIAMONTE 2983",
                 "description": "Descripción: MANTELECTRIC<br>X: 5440064.672<br>Y: 6349994.491<br>Tipo de trabajo: EXTRACCION<br>Horario: 7:30 a 12:30 Hrs<br>Corte de calle: CALZADA COMPLETA",
                 "Descripción": "MANTELECTRIC",
@@ -250,6 +256,7 @@
                 ]
             },
             "properties": {
+                "id": "7",
                 "name": "LAVALLE 1445",
                 "description": "Descripción: MANTELECTRIC<br>X: 5440044.683<br>Y: 6350427.438<br>Tipo de trabajo: EXTRACCION<br>Horario: 7:30 a 12:30 Hrs<br>Corte de calle: CALZADA COMPLETA",
                 "Descripción": "MANTELECTRIC",
@@ -271,6 +278,7 @@
                 ]
             },
             "properties": {
+                "id": "8",
                 "name": "SAN LUIS 4741",
                 "description": "Descripción: MANTELECTRIC<br>X: 5438136.306<br>Y: 6350305.154<br>Tipo de trabajo: EXTRACCION<br>Horario: 7:30 a 12:30 Hrs<br>Corte de calle: CALZADA COMPLETA",
                 "Descripción": "MANTELECTRIC",
@@ -292,6 +300,7 @@
                 ]
             },
             "properties": {
+                "id": "9",
                 "name": "TUCUMAN 4305",
                 "description": "Descripción: MANTELECTRIC<br>X: 5439027.492<br>Y: 6351380.782<br>Tipo de trabajo: EXTRACCION<br>Horario: 7:30 a 12:30 Hrs<br>Corte de calle: CALZADA COMPLETA",
                 "Descripción": "MANTELECTRIC",
@@ -313,6 +322,7 @@
                 ]
             },
             "properties": {
+                "id": "10",
                 "name": "SUIPACHA 2011",
                 "description": "Descripción: MANTELECTRIC<br>X: 5439791.016<br>Y: 6352304.59<br>Tipo de trabajo: EXTRACCION<br>Horario: 7:30 a 12:30 Hrs<br>Corte de calle: CALZADA COMPLETA",
                 "Descripción": "MANTELECTRIC",
@@ -334,6 +344,7 @@
                 ]
             },
             "properties": {
+                "id": "11",
                 "name": "VERA MUJICA 515",
                 "description": "Descripción: MANTELECTRIC<br>X: 5439505.863<br>Y: 6353061.268<br>Tipo de trabajo: EXTRACCION<br>Horario: 7:30 a 12:30 Hrs<br>Corte de calle: CALZADA COMPLETA",
                 "Descripción": "MANTELECTRIC",
@@ -355,6 +366,7 @@
                 ]
             },
             "properties": {
+                "id": "12",
                 "name": "DON ORIONE 1241",
                 "description": "Descripción: MANTELECTRIC<br>X: 5441483.314<br>Y: 6352604.025<br>Tipo de trabajo: EXTRACCION<br>Horario: 7:30 a 12:30 Hrs<br>Corte de calle: CALZADA COMPLETA",
                 "Descripción": "MANTELECTRIC",
@@ -376,6 +388,7 @@
                 ]
             },
             "properties": {
+                "id": "13",
                 "name": "ARROYITO 915 BIS",
                 "description": "Descripción: MANTELECTRIC<br>X: 5439027.591<br>Y: 6351389.947<br>Tipo de trabajo: EXTRACCION<br>Horario: 7:30 a 12:30 Hrs<br>Corte de calle: CALZADA COMPLETA",
                 "Descripción": "MANTELECTRIC",
@@ -397,6 +410,7 @@
                 ]
             },
             "properties": {
+                "id": "14",
                 "name": "DEL VALLE IBERLUCEA 1351",
                 "description": "Descripción: MANTELECTRIC<br>X: 5441483.314<br>Y: 6352604.025<br>Tipo de trabajo: DESCOPAR<br>Horario: 7:30 a 12:30 Hrs<br>Corte de calle: CALZADA COMPLETA",
                 "Descripción": "MANTELECTRIC",
@@ -418,6 +432,7 @@
                 ]
             },
             "properties": {
+                "id": "15",
                 "name": "AGUADO 130",
                 "description": "Descripción: MANTELECTRIC<br>X: 5438809.5<br>Y: 6352785.054<br>Tipo de trabajo: DESCOPAR<br>Horario: 7:30 a 12:30 Hrs<br>Corte de calle: SIN CORTE",
                 "Descripción": "MANTELECTRIC",
@@ -439,6 +454,7 @@
                 ]
             },
             "properties": {
+                "id": "16",
                 "name": "FREYRE 1447",
                 "description": "Descripción: ARBOLADO<br>X: 5438139.498<br>Y: 6350173.533<br>Tipo de trabajo: DESCOPAR<br>Horario: 7:30 a 12:30 Hrs<br>Corte de calle: SIN CORTE",
                 "Descripción": "ARBOLADO",
@@ -460,6 +476,7 @@
                 ]
             },
             "properties": {
+                "id": "17",
                 "name": "JUAN CANALS 1405",
                 "description": "Descripción: ARBOLADO<br>X: 5439406.765<br>Y: 6350443.861<br>Tipo de trabajo: DESCOPAR<br>Horario: 7:30 a 12:30 Hrs<br>Corte de calle: SIN CORTE",
                 "Descripción": "ARBOLADO",
@@ -481,6 +498,7 @@
                 ]
             },
             "properties": {
+                "id": "18",
                 "name": "BATTLE Y ORDOÑEZ 2714 D",
                 "description": "Descripción: ARBOLADO<br>X: 5439422.386<br>Y: 6350471.281<br>Tipo de trabajo: DESCOPAR<br>Horario: 7:30 a 12:30 Hrs<br>Corte de calle: SIN CORTE",
                 "Descripción": "ARBOLADO",
@@ -502,6 +520,7 @@
                 ]
             },
             "properties": {
+                "id": "19",
                 "name": "IRIONDO 4502 C",
                 "description": "Descripción: ARBOLADO<br>X: 5439417.732<br>Y: 6350472.236<br>Tipo de trabajo: DESCOPAR<br>Horario: 7:30 a 12:30 Hrs<br>Corte de calle: SIN CORTE",
                 "Descripción": "ARBOLADO",
@@ -523,6 +542,7 @@
                 ]
             },
             "properties": {
+                "id": "20",
                 "name": "LITUANIA 5253",
                 "description": "Descripción: ARBOLADO<br>X: 5439417.732<br>Y: 6350472.236<br>Tipo de trabajo: DESCOPAR<br>Horario: 7:30 a 12:30 Hrs<br>Corte de calle: SIN CORTE",
                 "Descripción": "ARBOLADO",
@@ -544,6 +564,7 @@
                 ]
             },
             "properties": {
+                "id": "21",
                 "name": "H. DE LA QUINTANA 729",
                 "description": "Descripción: ARBOLADO<br>X: 5439404.257<br>Y: 6350444.375<br>Tipo de trabajo: DESCOPAR<br>Horario: 7:30 a 12:30 Hrs<br>Corte de calle: SIN CORTE",
                 "Descripción": "ARBOLADO",

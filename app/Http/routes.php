@@ -25,3 +25,13 @@ Route::get('/home', 'HomeController@index');
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
+
+
+Route::get('/datatables/relevamiento', ['uses' => 'DatatablesController@relevamiento']);
+
+Route::post('/movimientos/addsalida', ['as' => 'addsalida', 'uses' => 'MovimientosController@store']);
+
+
+//RESPUESTAS AJAX JSON/ARRAY
+
+Route::get('/ajax/viewplaza/{id}', ['uses' => 'AjaxController@getPlaza']);

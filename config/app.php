@@ -160,6 +160,15 @@ return [
 
         Acacha\AdminLTETemplateLaravel\Providers\AdminLTETemplateServiceProvider::class,
 
+        //datatables
+
+        Yajra\Datatables\DatatablesServiceProvider::class,
+
+        //Laravel collective
+
+        Collective\Html\HtmlServiceProvider::class,
+
+
     ],
 
     /*
@@ -209,6 +218,15 @@ return [
         //AdminLTE
 
         'AdminLTE' => Acacha\AdminLTETemplateLaravel\Facades\AdminLTE::class,
+
+        //datatables
+
+        'Datatables' => Yajra\Datatables\Facades\Datatables::class,
+
+        //Laravel collective
+
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
     ],
 
 ];

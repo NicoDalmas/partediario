@@ -1,0 +1,21 @@
+/* Estilos personalizados */
+
+.tabla-articulos{
+	padding: 10px;
+}
+td.details-control {
+    background: url('../img/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    background: url('../img/details_close.png') no-repeat center center;
+}
+
+.labelazul{
+	text-align:center;
+	background-color:#337ab7;
+	color:#FFFFFF;
+	padding:6px 12px;
+	border:1px solid #cccccc;
+	border-radius:4px;
+}
