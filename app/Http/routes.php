@@ -35,3 +35,5 @@ Route::post('/movimientos/addsalida', ['as' => 'addsalida', 'uses' => 'Movimient
 //RESPUESTAS AJAX JSON/ARRAY
 
 Route::get('/ajax/viewplaza/{id}', ['uses' => 'AjaxController@getPlaza']);
+
+Route::get('/ajax/geoplazas', ['uses' => 'AjaxController@getCoordenadas']);

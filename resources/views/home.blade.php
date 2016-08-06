@@ -51,7 +51,7 @@
 		    zoom: 12
 		  });
 
-		    map.data.loadGeoJson('/js/mapa.json');
+		    map.data.loadGeoJson('/ajax/geoplazas');
 
 		    map.data.addListener('click', function(event) {
 			    $("#salidastock").modal();  //CON ESTO OBTENEMOS CUALQUIER VALOR(Obtendria el ID aca)
@@ -84,7 +84,7 @@
                             $('#cestos').text(element.cestos);
                             $('#observaciones').text(element.observaciones);
 
-                            jQuery.each( array, function( i, val ) {
+                           /* jQuery.each( array, function( i, val ) {
 
                                 text = element.+val;
 
@@ -94,7 +94,7 @@
                                }
                              
                             
-                            });
+                            });*/
                     });
                 });
 
