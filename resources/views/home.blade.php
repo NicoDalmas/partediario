@@ -60,6 +60,8 @@
                $.getJSON("/ajax/viewplaza/" + id_geometria, function (json) { //para modal edit y add
     
                    $.each(json, function(index, element) {
+                            
+                            var array = ["limpieza", "jardineria", "arbolado", "juegos", "bebederos", "estaciones_aerobicas", "bicicleteros", "cercos", "riego", "carteleria", "mobiliario", "mastil", "arenero", "caminos", "veredas", "luminarias", "esculturas", "playon", "cestos", "observaciones"];
 
                             $('#limpieza').text(element.limpieza);
                             $('#jardineria').text(element.jardineria);
@@ -81,6 +83,18 @@
                             $('#playon').text(element.playon);
                             $('#cestos').text(element.cestos);
                             $('#observaciones').text(element.observaciones);
+
+                            jQuery.each( array, function( i, val ) {
+
+                                text = element.+val;
+
+                               if (text == "MUY BUENO")
+                               {
+
+                               }
+                             
+                            
+                            });
                     });
                 });
 
