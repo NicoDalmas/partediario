@@ -14,15 +14,23 @@ class AjaxController extends Controller
 {
     public function getPlaza($id){
     	$rubrosub=DB::table('relevamiento_plazas')
+            ->select('id_plaza', 'limpieza', 'jardineria', 'arbolado', 'juegos', 'bebederos', 'estaciones_aerobicas', 'bicicleteros', 'cercos', 'riego', 'carteleria', 'mobiliario', 'mastil', 'arenero', 'caminos', 'veredas', 'luminarias', 'esculturas', 'playon', 'cestos', 'created_at')
 			->where('id_plaza', '=', $id )
-			->select('*')
 			->get();
     	return Response::json($rubrosub);
     }
+    public function getMobiliario($id){
+        $rubrosub=DB::table('mobiliario_plazas')
+            ->select('id_plaza', 'hamaca', 'subeybaja', 'tobogan', 'trepador', 'circuitos_aerobicos', 'pasamanos','multijuego', 'hamaca_inclusiva', 'playon as playon2', 'bebedero')
+            ->where('id_plaza', '=', $id )
+            ->get();
+        return Response::json($rubrosub);
+    }
+
     public function getCoordenadas()
     {
-    	$coordinates=DB::table('relevamiento_plazas')
-			->select('limpieza', 'jardineria', 'id_plaza', 'plaza')
+    	$coordinates=DB::table('informacion_plazas')
+			->select('id_plaza', 'nombre', 'latitud', 'longitud')
 			->get();
 
 		$original_data = json_decode(json_encode($coordinates), true);
@@ -31,8 +39,8 @@ class AjaxController extends Controller
         foreach($original_data as $key => $value) { 
             $features[] = array(
                     'type' => 'Feature',
-                    'geometry' => array('type' => 'Point', 'coordinates' => array((float)$value['jardineria'],(float)$value['limpieza'])),
-                    'properties' => array('name' => $value['plaza'], 'id' => $value['id_plaza']),
+                    'geometry' => array('type' => 'Point', 'coordinates' => array((float)$value['longitud'],(float)$value['latitud'])),
+                    'properties' => array('name' => $value['nombre'], 'id' => $value['id_plaza']),
                     );
             };   
 

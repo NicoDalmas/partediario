@@ -14,12 +14,12 @@ class DatatablesController extends Controller
 {
     public function relevamiento()
     {
-        $salidas = DB::table('relevamiento_plazas')
-        	->select(['id_plaza', 'plaza', 'distrito', 'relevado']);
+        $salidas = DB::table('informacion_plazas')
+        	->select(['id_plaza', 'nombre', 'distrito', 'direccion', 'observaciones', 'latitud', 'longitud', 'codigo']);
 
         return Datatables::of($salidas)
         	->addColumn('action', function ($salidas) {
-                return '<a href="#" class="btn btn-xs geolocalizar"><i class="glyphicon glyphicon-globe"></i></a><a href="#" class="btn btn-xs"><i class="glyphicon glyphicon-upload"></i></a>';
+                return '<a href="#" class="btn btn-xs geolocalizar"><i class="glyphicon glyphicon-globe"></i></a><a href="/cargartrabajo/'.$salidas->id_plaza.'" class="btn btn-xs"><i class="glyphicon glyphicon-upload"></i></a>';
             })
         	->make(true);
     }

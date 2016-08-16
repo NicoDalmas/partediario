@@ -6,18 +6,17 @@
 
 
 @section('main-content')
-		
 	<!-- Datatables Salidas Master -->
     <div class="box tabla-articulos">
         <div class="box-body no-padding">
             <table id="tabla-movimientos" class="table table-striped table-bordered"  cellspacing="0" width="100%">
                 <thead>
                     <tr>
-                    	<th></th>
-                        <th>ID Plaza</th>
+                        <th>Codigo</th>
                         <th>Nombre de la plaza</th>
                         <th>Distrito</th>
-                        <th>Fecha de relevamiento</th>
+                        <th>Direccion</th>
+                        <th>Observaciones</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -31,7 +30,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">Mapa</div>
 
-					<div class="panel-body">
+					<div class="panel-body" id="contenedormap">
 						
 					 <div id="map" style="width: auto; height: 500px; margin: 0 auto;"></div>
 
@@ -43,63 +42,116 @@
 
     <!-- Incluir Formulario -->
     @include('modals.detallesplaza')
+    
+	<script>
+        var map;
+        
 
-	 <script>
 		function initMap() {
-		  var map = new google.maps.Map(document.getElementById('map'), {
+		    map = new google.maps.Map(document.getElementById('map'), {
 		    center: {lat: -32.9497106, lng: -60.6473459},
 		    zoom: 12
 		  });
-
+           
 		    map.data.loadGeoJson('/ajax/geoplazas');
 
+           /* map.data.setStyle({
+               icon: 'img/icono-plaza.png',  //CAMBIAR ICONO
+            });*/   
+
 		    map.data.addListener('click', function(event) {
-			    $("#salidastock").modal();  //CON ESTO OBTENEMOS CUALQUIER VALOR(Obtendria el ID aca)
-                var id_geometria = event.feature.getProperty('id');
-
-               $.getJSON("/ajax/viewplaza/" + id_geometria, function (json) { //para modal edit y add
-    
+                
+                $("#salidastock").modal(); 
+                var id_plaza = event.feature.getProperty('id');  //CON ESTO OBTENEMOS CUALQUIER VALOR(Obtendria el ID aca)
+                $.getJSON("/ajax/viewplaza/" + id_plaza, function (json) { //para modal edit y add
                    $.each(json, function(index, element) {
-                            
-                            var array = ["limpieza", "jardineria", "arbolado", "juegos", "bebederos", "estaciones_aerobicas", "bicicleteros", "cercos", "riego", "carteleria", "mobiliario", "mastil", "arenero", "caminos", "veredas", "luminarias", "esculturas", "playon", "cestos", "observaciones"];
+                           jQuery.each(element, function( index, element) {
+                                $("#"+index).removeClass();
+                                $("#"+index).text(element);
 
-                            $('#limpieza').text(element.limpieza);
-                            $('#jardineria').text(element.jardineria);
-                            $('#arbolado').text(element.arbolado);
-                            $('#juegos').text(element.juegos);
-                            $('#bebederos').text(element.bebederos);
-                            $('#aerobicas').text(element.estaciones_aerobicas);
-                            $('#bicicleteros').text(element.bicicleteros);
-                            $('#cercos').text(element.cercos);
-                            $('#riego').text(element.riego);
-                            $('#carteleria').text(element.carteleria);
-                            $('#mobiliario').text(element.mobiliario);
-                            $('#mastil').text(element.mastil);
-                            $('#arenero').text(element.arenero);
-                            $('#caminos').text(element.caminos);
-                            $('#veredas').text(element.veredas);
-                            $('#luminarias').text(element.luminarias);
-                            $('#esculturas').text(element.esculturas);
-                            $('#playon').text(element.playon);
-                            $('#cestos').text(element.cestos);
-                            $('#observaciones').text(element.observaciones);
 
-                           /* jQuery.each( array, function( i, val ) {
+                                if(element == "MUY BUENO" || element == "MUY BUENA")
+                                {
+                                    $("#"+index).addClass("labelverdeosc");
+                                }
+                                else if(element == "NO PRESENTA")
+                                {
+                                    $("#"+index).addClass("labelgris");
+                                }
+                                else if(element == "BUENA" || element == "BUENO" || element == "BUEN ESTADO")
+                                {
+                                    $("#"+index).addClass("labelverde");
 
-                                text = element.+val;
+                                }
+                                else if(element == "REGULAR")
+                                {
+                                    $("#"+index).addClass("labelnaranja");
 
-                               if (text == "MUY BUENO")
-                               {
+                                }
+                                else if(element == "MAL")
+                                {
+                                    $("#"+index).addClass("labelrojo");
 
-                               }
-                             
-                            
-                            });*/
+                                }
+                                else if(element == "MAL ESTADO")
+                                {
+                                    $("#"+index).addClass("labelrojo");
+
+                                }
+                                else if(element == "")
+                                {
+                                    $("#"+index).text("NO PRESENTA");
+                                    $("#"+index).addClass("labelgris");
+                                }
+                                else
+                                {
+                                    $("#"+index).addClass("otros");
+                                }                         
+                            });
                     });
                 });
+                $.getJSON("/ajax/mobiliario/" + id_plaza, function (json) { //para modal edit y add
+                   $.each(json, function(index, element) {
+                           jQuery.each(element, function( index, element) {
+                                $("#"+index).text(element);
 
+                                if(element == "")
+                                {
+                                    return "0";
+                                }
+                            });
+                    });
+                });
 			});
+            
+            var infowindow =  new google.maps.InfoWindow({
+                content: 'Hello World!',
+                map: map
+            });
+
+            map.data.addListener('mouseover', function() {
+                infowindow.open(map, this);
+            });
+
+            // assuming you also want to hide the infowindow when user mouses-out
+            map.data.addListener('mouseout', function() {
+                infowindow.close();
+            });
+
+
+
 		}
+
+        function newLocation(newLat,newLng)
+        {
+            map.setCenter({
+                lat : newLat,
+                lng : newLng
+            });
+            map.setZoom(18);
+        }
+     
+        $( document ).ready(function() {
 
         $("#tabla-movimientos").DataTable({
             "processing": true,
@@ -109,24 +161,23 @@
                 alert("Custom error");
             },
             "columns":[
-                {
-                    className:"details-control",
-                    orderable: false,
-                    searchable: false,
-                    data: null,
-                    defaultContent: ""
-                },
-                {data: 'id_plaza', name: 'id_plaza'},
-                {data: 'plaza', name: 'plaza'},
+                {data: 'codigo', name: 'codigo'},
+                {data: 'nombre', name: 'nombre'},
                 {data: 'distrito', name: 'distrito'},
-                {data: 'relevado', name: 'relevado'},
+                {data: 'direccion', name: 'direccion'},
+                {data: 'observaciones', name: 'observaciones'},
                 {data: 'action', name: 'action' , orderable: false, searchable: false},
+                {data: 'latitud', name: 'latitud', visible: false},
+                {data: 'longitud', name: 'longitud', visible: false},
+                {data: 'id_plaza', name: 'id_plaza', visible: false},
             ],
-            "order": [ 1, "desc" ],
+            "order": [ 1, "asc" ],
             "language":{
                 url: "{!! asset('/plugins/datatables/lenguajes/spanish.json') !!}"
             }
         });
+
+        var table = $("#tabla-movimientos").DataTable();
 
         //Cerrar modal salidas de stock
         $(".close").click(function() {
@@ -135,10 +186,32 @@
 
         $('#tabla-movimientos').on('draw.dt', function () {
             $('.geolocalizar').click(function() {
-                console.log("hoola");
+
+                var tr = $(this).closest('tr');
+                var row = table.row(tr);
+                var latitud = parseFloat(row.data().latitud);
+                var longitud = parseFloat(row.data().longitud);
+
+
+
+                if( isNaN(longitud) || isNaN(latitud) )
+                {
+                    alert("No esta georeferenciado")
+                }
+                else
+                {   
+                    newLocation(latitud,longitud);
+                    $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+                    return false;
+                }
             });
         });
 
+       /* $('#click').click(function() {
+            
+            $("#focus").focus();
+        });*/
+        
         /*$('.edit').click(function(){
             $('#editar').modal();
 
@@ -187,7 +260,7 @@
                 $('#estado').prop('checked', true);
             }
         });   */
-
+        });
     </script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXlWuFRd_KKz9jNwJeXZC7uxoNnF-sS2E&signed_in=true&libraries=drawing&callback=initMap" async defer></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXlWuFRd_KKz9jNwJeXZC7uxoNnF-sS2E&callback=initMap"> </script>
 @endsection
