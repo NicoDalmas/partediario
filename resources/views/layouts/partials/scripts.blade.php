@@ -8,3 +8,8 @@
 <script src="{{ asset('/js/app.min.js') }}" type="text/javascript"></script>
 <!-- DataTables -->
 <script src="{{ asset('/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+<!-- Icheck! -->
+<script src="{{ asset('/js/icheck.js') }}" type="text/javascript"></script>
+<!-- Dropzone -->
+<script src="{{ asset('vendor/dropzoner/dropzone/dropzone.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('vendor/dropzoner/dropzone/config.js') }}" type="text/javascript"></script>

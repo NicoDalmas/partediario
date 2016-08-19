@@ -12,6 +12,8 @@
     <link href="{{ asset('/css/AdminLTE.css') }}" rel="stylesheet" type="text/css" />
     <!-- Estilos personalizados-->
     <link href="{{ asset('/css/estilos.css') }}" rel="stylesheet" type="text/css" />
+    <!-- Icheck BLUE-->
+    <link href="{{ asset('/css/blue.css') }}" rel="stylesheet" type="text/css" />
     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
           page. However, you can choose any other skin. Make sure you
           apply the skin class to the body tag so the changes take effect.
@@ -21,6 +23,8 @@
     <link href="{{ asset('/plugins/iCheck/square/blue.css') }}" rel="stylesheet" type="text/css" />
     <!-- Datatables -->
     <link href="{{ asset('/plugins/datatables/dataTables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <!-- Dropzone css -->
+    <link rel="stylesheet" href="{{ asset('vendor/dropzoner/dropzone/dropzone.min.css')}}">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

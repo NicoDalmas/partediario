@@ -30,7 +30,7 @@ class AjaxController extends Controller
     public function getCoordenadas()
     {
     	$coordinates=DB::table('informacion_plazas')
-			->select('id_plaza', 'nombre', 'latitud', 'longitud')
+			->select('id_plaza', 'nombre', 'latitud', 'longitud', 'codigo')
 			->get();
 
 		$original_data = json_decode(json_encode($coordinates), true);
@@ -40,7 +40,7 @@ class AjaxController extends Controller
             $features[] = array(
                     'type' => 'Feature',
                     'geometry' => array('type' => 'Point', 'coordinates' => array((float)$value['longitud'],(float)$value['latitud'])),
-                    'properties' => array('name' => $value['nombre'], 'id' => $value['id_plaza']),
+                    'properties' => array('name' => $value['nombre'], 'id' => $value['id_plaza'], 'codigo' => $value['codigo']),
                     );
             };   
 

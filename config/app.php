@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -168,6 +168,12 @@ return [
 
         Collective\Html\HtmlServiceProvider::class,
 
+        //Manejo de imagenes
+
+        Intervention\Image\ImageServiceProvider::class,
+
+        Codingo\Dropzoner\DropzonerServiceProvider::class,
+
 
     ],
 
@@ -227,6 +233,11 @@ return [
 
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+
+        //Manejo de imagenes
+
+        'Image'     => Intervention\Image\Facades\Image::class,
+
     ],
 
 ];

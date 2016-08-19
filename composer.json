@@ -9,7 +9,9 @@
         "laravel/framework": "5.2.*",
         "acacha/admin-lte-template-laravel": "2.*",
         "yajra/laravel-datatables-oracle": "~6.0",
-        "laravelcollective/html": "5.2.*"
+        "laravelcollective/html": "5.2.*",
+        "intervention/image": "^2.3",
+        "codingo-me/dropzoner": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

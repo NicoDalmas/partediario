@@ -42,3 +42,5 @@ Route::get('/ajax/viewplaza/{id}', ['uses' => 'AjaxController@getPlaza']);
 Route::get('/ajax/mobiliario/{id}', ['uses' => 'AjaxController@getMobiliario']);
 
 Route::get('/ajax/geoplazas', ['uses' => 'AjaxController@getCoordenadas']);
+
+//IMAGENES
