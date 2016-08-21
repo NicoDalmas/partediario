@@ -172,9 +172,6 @@ return [
 
         Intervention\Image\ImageServiceProvider::class,
 
-        Codingo\Dropzoner\DropzonerServiceProvider::class,
-
-
     ],
 
     /*

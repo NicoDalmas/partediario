@@ -16,8 +16,8 @@
 			<div class="panel-heading">Cargar trabajo en plaza</div>
 
 			<div class="panel-body">
-				
-				{!! Form::open(['route' => 'addtrabajo', 'method' => 'POST', 'class' => 'form-horizontal' ]) !!}
+
+				{!! Form::open(['url' => route('upload-post'), 'class' => 'form-horizontal', 'id'=>'real-dropzone', 'enctype' => 'multipart/form-data', 'method' => 'POST']) !!}
 
 				<!--@if($errors->has())
 		            <div class="alert alert-warning" role="alert">
@@ -103,8 +103,13 @@
 				</div>
 
 				<div class="form-group">
-					@include('dropzoner::dropzone')
+		            <div>
+		               <div id="myDropZone" class="dropzone"></div>
+		            </div>
 				</div>
+				{!! Form::hidden('csrf-token', csrf_token(), ['id' => 'csrf-token']) !!}
+				{{ Form::submit('Upload', array('name' => 'upload-file', 'class'=>"btn btn-info")) }}
+				{{ Form:: close() }}
 			</div>
 		</div>
 	</div>
@@ -117,6 +122,53 @@
             },
             "paging":   false,
         }); 
+
+        //CONFIGURACION DROPZONE
+        Dropzone.autoDiscover = false;
+        $("div#myDropZone").dropzone({
+		    url : "/cargartrabajo/imagenes",
+		    autoProcessQueue: false,
+			uploadMultiple: true,
+			parallelUploads: 100,
+			maxFiles: 100,
+
+			init:function() {
+
+			var myDropzone = this;
+			var photo_counter = 0;
+
+		        /*myDropzone.on("removedfile", function(file) {
+		            $.ajax({
+		                type: 'POST',
+		                url: 'cargartrabajo/imagenes/delete',
+		                data: {id: file.name, _token: $('#csrf-token').val()},
+		                dataType: 'html',
+		                success: function(data){
+		                    var rep = JSON.parse(data);
+		                    if(rep.code == 200)
+		                    {
+		                        photo_counter--;
+		                        $("#photoCounter").text( "(" + photo_counter + ")");
+		                    }
+
+		                }
+		            });
+
+		        });*/
+
+		        // First change the button to actually tell Dropzone to process the queue.
+            	document.querySelector("input[name=upload-file]").addEventListener("click", function(e) {
+		                // Make sure that the form isn't actually being sent.
+		                e.preventDefault();
+		                e.stopPropagation();
+		                myDropzone.processQueue();
+	            });
+			},
+			success: function(file,done) {
+		        photo_counter++;
+		        $("#photoCounter").text( "(" + photo_counter + ")");
+		    }
+		});
     });
 	</script>
 @endsection

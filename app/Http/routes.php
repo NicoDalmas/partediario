@@ -44,3 +44,7 @@ Route::get('/ajax/mobiliario/{id}', ['uses' => 'AjaxController@getMobiliario']);
 Route::get('/ajax/geoplazas', ['uses' => 'AjaxController@getCoordenadas']);
 
 //IMAGENES
+
+Route::post('cargartrabajo/imagenes', ['as' => 'upload-post', 'uses' =>'ImagenesController@postUpload']);
+
+Route::post('cargartrabajo/imagenes/delete', ['as' => 'upload-remove', 'uses' =>'ImagenesController@deleteUpload']);
