@@ -10,14 +10,14 @@ class ImageRepository
 {
     public function upload( $form_data )
     {
-        $validator = Validator::make($form_data, Image::$rules, Image::$messages);
+        /*$validator = Validator::make($form_data, Image::$rules, Image::$messages);
         if ($validator->fails()) {
             return Response::json([
                 'error' => true,
                 'message' => $validator->messages()->first(),
                 'code' => 400
             ], 400);
-        }
+        }*/
         $photo = $form_data['file'];
         $originalName = $photo->getClientOriginalName();
         $extension = $photo->getClientOriginalExtension();
