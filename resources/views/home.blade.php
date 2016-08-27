@@ -6,6 +6,25 @@
 
 
 @section('main-content')
+
+    <!-- Mensajes de error-->
+    
+    @if($errors->has())
+        <div class="alert alert-warning" role="alert">
+           @foreach ($errors->all() as $error)
+              <div>{{ $error }}</div>
+          @endforeach
+        </div>
+     @endif
+
+    <!-- Mensajes de exito-->
+
+    @if (session('status'))
+        <div class="alert alert-success" id="ocultar">
+            {{ session('status') }}
+        </div>
+    @endif
+
 	<!-- Datatables Salidas Master -->
     <div class="box tabla-articulos">
         <div class="box-body no-padding">
@@ -152,6 +171,14 @@
         }
      
         $( document ).ready(function() {
+
+        //Errores y mensajes desaparecen.
+
+        $("#ocultar").fadeTo(8000, 500).slideUp(500, function(){
+            $("ocultar").alert('close');
+        });
+
+        //Datatables
 
         $("#tabla-movimientos").DataTable({
             "processing": true,

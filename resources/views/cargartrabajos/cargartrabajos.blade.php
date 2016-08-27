@@ -19,23 +19,6 @@
 
 				{!! Form::open(['url' => route('store-trabajo'), 'class' => 'form-horizontal']) !!}
 
-				<!--@if($errors->has())
-		            <div class="alert alert-warning" role="alert">
-		               @foreach ($errors->all() as $error)
-		                  <div>{{ $error }}</div>
-		              @endforeach
-		            </div>
-       			 @endif-->
-
-       			<!-- Mensajes de exito-->
-
-			    @if (session('status'))
-			        <div class="alert alert-success" id="ocultar">
-			            {{ session('status') }}
-			        </div>
-			    @endif
-
-
    			<div class="col-md-6">
        			<div class="form-group">
 					{!! Form::label(null, 'Mobiliario:', array('class' => 'control-label col-sm-4')) !!}
@@ -136,7 +119,7 @@
                 url: "{!! asset('/plugins/datatables/lenguajes/spanish.json') !!}"
             },
             "paging":   false,
-        }); 
+        });
 
         //CONFIGURACION DROPZONE
         Dropzone.autoDiscover = false;
@@ -173,6 +156,7 @@
 		                    {
 		                        photo_counter--;
 		                        $("#photocounter").text( "Imagenes cargadas: (" + photo_counter + ")");
+		                        $("#contadorhidden").val(photo_counter);
 		                        $("input[value='"+rep.id+"']").remove();
 		                    }
 

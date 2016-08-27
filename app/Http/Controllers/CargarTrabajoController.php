@@ -44,7 +44,6 @@ class CargarTrabajoController extends Controller
                             ->withInput();
             }*/
 
-            //Cargar datos en la tabla salida master
             $master = new TrabajosMaster;
             $master->id_usuario = $request->usuario;
             $contador = $request->contadorhidden;
@@ -53,7 +52,11 @@ class CargarTrabajoController extends Controller
             {
             	$master->imagenes = $contador;   
             }
-            //Guardamos salidas master
+            else
+            {
+                $master->imagenes = 0;   
+            }
+
             $master->save();
 
             //Obtenemos el id 
@@ -61,33 +64,13 @@ class CargarTrabajoController extends Controller
 
             if($contador > 0)
             {
-                for($i=0;$i <count($contador);$i++)
+                for($i=0 ; $i < $contador ; $i++)
                 {
-                    /*$update = array(
-                                    'id' => $request->fotos[$i],
-                                    );
-
                     Image::where('id', $request->fotos[$i])
-                        ->update(['id_master' => $id]);*/
-
-                    /*$flight = Image::find($request->fotos[$i]);
-
-                    $flight->id_master = $id;
-
-                    $flight->save();*/
-
-                    $fotos = $request->fotos[$i];
-
-                    foreach($fotos as $foto){
-
-                        Image::where('id', $foto['fotos'])
                         ->update(['id_master' => $id]);
-
-                    }
                 }    
             }
 
-            //Cargamos datos en la tabla salida detalles
             if($id > 0)
             {
                 for($i=0;$i <count($request->mobiliario);$i++)
@@ -106,17 +89,15 @@ class CargarTrabajoController extends Controller
 
             //Commit y redirect con success
             DB::commit();
-            return redirect()
-                ->back()
-                ->with('status', $update);
+            return redirect('/home')
+                ->with('status', 'Se ha procesado correctamente.');
         }
 
         catch (Exception $e)
         {
             //Rollback y redirect con error
             DB::rollback();
-            return redirect()
-                ->back()
+            return redirect('/home')
                 ->withErrors('Se ha producido un errro: ( ' . $e->getCode() . ' ): ' . $e->getMessage().' - Copie este texto y envielo a informática');
         }
 	}
