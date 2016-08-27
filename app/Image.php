@@ -13,4 +13,6 @@ class Image extends Model
         'file.mimes' => 'Uploaded file is not in image format',
         'file.required' => 'Image is required'
     ];
+    //Definimos los campos que se pueden llenar con asignación masiva
+    protected $fillable = ['id_master'];
 }

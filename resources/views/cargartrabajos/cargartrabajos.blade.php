@@ -13,11 +13,11 @@
 @section('main-content')
 	<div class="container-fluid">
 		<div class="panel panel-default">
-			<div class="panel-heading">Cargar trabajo en plaza</div>
+			<div class="panel-heading">Cargar trabajo en {!! $plaza->nombre !!} - Codigo de plaza {!! $plaza->codigo !!}</div>
 
 			<div class="panel-body">
 
-				{!! Form::open(['url' => route('upload-post'), 'class' => 'form-horizontal', 'id'=>'real-dropzone', 'enctype' => 'multipart/form-data', 'file' => 'true']) !!}
+				{!! Form::open(['url' => route('store-trabajo'), 'class' => 'form-horizontal']) !!}
 
 				<!--@if($errors->has())
 		            <div class="alert alert-warning" role="alert">
@@ -25,35 +25,44 @@
 		                  <div>{{ $error }}</div>
 		              @endforeach
 		            </div>
-       			 @endif -->
+       			 @endif-->
+
+       			<!-- Mensajes de exito-->
+
+			    @if (session('status'))
+			        <div class="alert alert-success" id="ocultar">
+			            {{ session('status') }}
+			        </div>
+			    @endif
+
 
    			<div class="col-md-6">
        			<div class="form-group">
 					{!! Form::label(null, 'Mobiliario:', array('class' => 'control-label col-sm-4')) !!}
 					<div class="col-sm-8">
-						{!! Form::select('mobiliario', array('Bebederos' => 'Bebederos', 'Juegos' => 'Juegos', 'Bancos' => 'Bancos', 'Cesto' => 'Cestos', 'Estaciones Aerobicas' => 'Estaciones Aerobicas'), null ,array('class'=>'form-control', 'style' => 'width: 100%', 'required' => 'required', 'id' => 'mobiliario', 'placeholder' => 'Seleccione el mobiliario...')) 
+						{!! Form::select('mobiliario', array('Bebederos' => 'Bebederos', 'Juegos' => 'Juegos', 'Bancos' => 'Bancos', 'Cesto' => 'Cestos', 'Estaciones Aerobicas' => 'Estaciones Aerobicas'), null ,array('class'=>'form-control', 'style' => 'width: 100%', 'id' => 'mobiliario', 'placeholder' => 'Seleccione el mobiliario...')) 
                         !!}
 					</div>
 				</div>
 				<div class="form-group">
 					{!! Form::label(null, 'Tipo de trabajo:', array('class' => 'control-label col-sm-4')) !!}
 					<div class="col-sm-8">
-						{!! Form::checkbox('tipos[]', 'Pintura') !!}
+						{!! Form::checkbox('tipos', 'Pintura') !!}
                         <label>Pintura</label><br>
 
-                        {!! Form::checkbox('tipos[]', 'Reparación') !!}
+                        {!! Form::checkbox('tipos', 'Reparación') !!}
                         <label>Reparación</label><br>
 
-                        {!! Form::checkbox('tipos[]', 'Herreria') !!}
+                        {!! Form::checkbox('tipos', 'Herreria') !!}
                         <label>Herreria</label><br>
 
-                        {!! Form::checkbox('tipos[]', 'Instalación') !!}
+                        {!! Form::checkbox('tipos', 'Instalación') !!}
                         <label>Instalación</label><br>
 
-                        {!! Form::checkbox('tipos[]', 'Traslado') !!}
+                        {!! Form::checkbox('tipos', 'Traslado') !!}
                         <label>Traslado</label><br>
 
-                        {!! Form::checkbox('tipos[]', 'Extracción') !!}
+                        {!! Form::checkbox('tipos', 'Extracción') !!}
                         <label>Extracción</label>
 
 					</div>
@@ -90,7 +99,7 @@
 			                            <th>Tipos de trabajo</th>
 			                            <th>Cuadrilla</th>
 			                            <th>Descripción</th>
-			                            <th>a</th>
+			                            <th></th>
 			                        </tr>
 			                    </thead>
 			                </table>
@@ -99,11 +108,21 @@
 				</div>
 
 				<div class="form-group">
-		            <div>
-		               <div id="myDropZone" class="dropzone"></div>
-		            </div>
+						<span class="label label-success" id="photocounter" style="font-size: 15px;"></span>
+			            <div class="bordedropzone">
+			               <div id="myDropZone" class="dropzone"></div>
+			            </div>
 				</div>
+
+				<div id="fotosinput">
+
+				</div>
+
+				{{ Form::hidden('usuario', Auth::user()->id) }}
 				{{ Form::hidden('csrf-token', csrf_token(), ['id' => 'csrf-token']) }}
+				{{ Form::hidden('contadorhidden', null, ['id' => 'contadorhidden']) }}
+
+				{{ Form::submit('Despachar', ['class'=>'btn btn btn-primary'])}}
 				{{ Form:: close() }}
 
 			</div>
@@ -153,12 +172,13 @@
 		                    if(rep.code == 200)
 		                    {
 		                        photo_counter--;
-		                        $("#photoCounter").text( "(" + photo_counter + ")");
+		                        $("#photocounter").text( "Imagenes cargadas: (" + photo_counter + ")");
+		                        $("input[value='"+rep.id+"']").remove();
 		                    }
 
 		                }
-		            });
 
+		            });
 		        } );
 		    },
 		    error: function(file, response) {
@@ -177,40 +197,47 @@
 		    },
 		    success: function(file,done) {
 		        photo_counter++;
-		        $("#photoCounter").text( "(" + photo_counter + ")");
+		        $("#photocounter").text( "Imagenes cargadas: (" + photo_counter + ")");
+		        $("#contadorhidden").val(photo_counter);
+		        console.log(done.id);
+		        $("#fotosinput").append($("<input type='hidden' name='fotos[]' value='" + done.id + "'>"));
 		    }
 		});
 
-		var contador = 1;
-        $("#agregar").on( 'click', function () {
-            
+		//Eliminar articulos ingresados en la datatable
+	    $("#tabla-cargartrabajo tbody").on( "click", ".delete", function () {
+	        $("#tabla-cargartrabajo").DataTable()
+	            .row( $(this).parents("tr") )
+	            .remove()
+	            .draw();
+	    });
 
-			var tipos = $("input[name='tipos[]']:checked").map(function() {return this.value;}).get().join(', ')
+        $("#agregar").on( 'click', function () {
+          
+       		var tipos = $("input[name='tipos']:checked").map(function() {return this.value;}).get().join(', ')
             var mobiliario = $("#mobiliario").val();
             var cuadrilla = $("#cuadrilla").val();
             var descripcion = $("#descripcion").val();
 
-            $("#tabla-cargartrabajo").DataTable().row.add( [
-                mobiliario+"<input type='hidden' name='mobiliario[]' value='"+mobiliario+"'>",
-                tipos+"<input type='hidden' name='tipos[]' value='"+tipos+"'>",
-                cuadrilla+"<input type='hidden' name='cuadrilla[]' value='"+cuadrilla+"'>",
-                descripcion+"<input type='hidden' name='descripcion[]' value='"+descripcion+"'>",
-                "<a class='btn botrojo btn-xs' href='#'><i class='glyphicon glyphicon-trash delete'></i></a>"
-            ] ).draw( false );
-
-             //Eliminar articulos ingresados en la datatable
-		    $("#tabla-cargartrabajo tbody").on( "click", ".delete", function () {
-		        $("#tabla-cargartrabajo").DataTable()
-		            .row( $(this).parents("tr") )
-		            .remove()
-		            .draw();
-		    });
-
-            $("#mobiliario").val("");
-            /*$("#mobiliario").val("");*/
-            $("#cuadrilla").val("");
-            $("#descripcion").val("");
-       
+       		//Validaciones antes de agregar articulos a la tabla
+            if(tipos.length != 0 && mobiliario.length != 0 && cuadrilla.length != 0 && descripcion.length != 0)
+            {
+	            $("#tabla-cargartrabajo").DataTable().row.add( [
+	                mobiliario+"<input type='hidden' name='mobiliario[]' value='"+mobiliario+"'>",
+	                tipos+"<input type='hidden' name='tipos[]' value='"+tipos+"'>",
+	                cuadrilla+"<input type='hidden' name='cuadrilla[]' value='"+cuadrilla+"'>",
+	                descripcion+"<input type='hidden' name='descripcion[]' value='"+descripcion+"'>",
+	                "<a class='btn botrojo btn-xs' href='#'><i class='glyphicon glyphicon-trash delete'></i></a>"
+	            ] ).draw( false );
+	            $("#mobiliario").val("");
+	            $("input:checkbox").prop('checked', false);
+	            $("#cuadrilla").val("");
+	            $("#descripcion").val("");
+	            $("#mobiliario").focus();
+            }
+            else{
+                alert("Todos los campos son requeridos.")
+            }   
         });
 
     });

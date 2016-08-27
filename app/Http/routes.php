@@ -45,6 +45,8 @@ Route::get('/ajax/geoplazas', ['uses' => 'AjaxController@getCoordenadas']);
 
 //IMAGENES
 
-Route::post('cargartrabajo/imagenes/upload', ['as' => 'upload-post', 'uses' =>'ImagenesController@postUpload']);
+Route::post('cargartrabajo/store', ['as' => 'store-trabajo', 'uses' =>'CargarTrabajoController@store']);
+
+Route::post('/cargartrabajo/imagenes/upload', ['uses' =>'ImagenesController@postUpload']);
 
 Route::post('cargartrabajo/imagenes/delete', ['as' => 'upload-remove', 'uses' =>'ImagenesController@deleteUpload']);

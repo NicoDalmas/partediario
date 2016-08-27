@@ -73,3 +73,9 @@ tr.shown td.details-control {
 	border:1px solid #cccccc;
 	border-radius:4px;
 }
+.bordedropzone
+{
+	border: 2px dashed #0087F7;
+    border-radius: 5px;
+    background: white;
+}

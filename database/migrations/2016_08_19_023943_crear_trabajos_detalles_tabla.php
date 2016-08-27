@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CrearImagenesTabla extends Migration
+class CrearTrabajosDetallesTabla extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,14 @@ class CrearImagenesTabla extends Migration
      */
     public function up()
     {
-        Schema::create('images', function (Blueprint $table) {
-            $table->increments('id');
-            $table->text('original_name');
-            $table->text('filename');
-            $table->integer('id_master')->unsigned()->nullable()->default(null);
+        Schema::create('trabajos_detalles', function (Blueprint $table) {
+            $table->increments('id_detalle');
+            $table->integer('id_master')->unsigned();
             $table->foreign('id_master')->references('id_master')->on('trabajos_master');
+            $table->string('mobiliario', 60);
+            $table->string('tipo_trabajos', 60);
+            $table->string('cuadrilla', 60);
+            $table->string('descripcion', 255);
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ class CrearImagenesTabla extends Migration
      */
     public function down()
     {
-        Schema::drop('images');
+        Schema::drop('trabajos_detalles');
     }
 }

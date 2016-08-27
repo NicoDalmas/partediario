@@ -10,14 +10,14 @@ class ImageRepository
 {
     public function upload( $form_data )
     {
-        /*$validator = Validator::make($form_data, Image::$rules, Image::$messages);
+        $validator = Validator::make($form_data, Image::$rules, Image::$messages);
         if ($validator->fails()) {
             return Response::json([
                 'error' => true,
                 'message' => $validator->messages()->first(),
                 'code' => 400
             ], 400);
-        }*/
+        }
         $photo = $form_data['file'];
         $originalName = $photo->getClientOriginalName();
         $extension = $photo->getClientOriginalExtension();
@@ -40,7 +40,8 @@ class ImageRepository
         return Response::json([
             'error' => false,
             'code'  => 200,
-            'filename' => $allowed_filename
+            'filename' => $allowed_filename,
+            'id' => $sessionImage->id
         ], 200);
     }
     public function createUniqueFilename( $filename, $extension )
@@ -88,7 +89,7 @@ class ImageRepository
         {
             return Response::json([
                 'error' => true,
-                'code'  => 400
+                'code'  => 400,
             ], 400);
         }
         $full_path1 = $full_size_dir . $sessionImage->filename;
@@ -107,7 +108,8 @@ class ImageRepository
         }
         return Response::json([
             'error' => false,
-            'code'  => 200
+            'code'  => 200,
+            'id' => $sessionImage->id
         ], 200);
     }
     function sanitize($string, $force_lowercase = true, $anal = false)
