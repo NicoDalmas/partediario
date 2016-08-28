@@ -65,7 +65,7 @@
 				</div>
 				<div class="form-group">
 					<div class="col-sm-8">
-					{!! Form::button('Agregar Trabajo', array('class' => 'btn btn-primary', 'id' => 'agregar')) !!}
+					{!! Form::button('+', array('class' => 'btn btn-primary', 'id' => 'agregar', '')) !!}
 					</div>
 				</div>
 
@@ -105,7 +105,7 @@
 				{{ Form::hidden('csrf-token', csrf_token(), ['id' => 'csrf-token']) }}
 				{{ Form::hidden('contadorhidden', null, ['id' => 'contadorhidden']) }}
 
-				{{ Form::submit('Despachar', ['class'=>'btn btn btn-primary'])}}
+				{{ Form::submit('Finalizar carga de trabajos', ['class'=>'btn btn-success btn-lg', 'style' => 'float: right;'])}}
 				{{ Form:: close() }}
 
 			</div>
@@ -119,6 +119,8 @@
                 url: "{!! asset('/plugins/datatables/lenguajes/spanish.json') !!}"
             },
             "paging":   false,
+            "bFilter": false,
+            "ordering": false
         });
 
         //CONFIGURACION DROPZONE

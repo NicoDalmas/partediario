@@ -4,3 +4,5 @@
 Homestead.yaml
 Homestead.json
 .env
+/public/imagenes/full_size
+/public/imagenes/icon_size
