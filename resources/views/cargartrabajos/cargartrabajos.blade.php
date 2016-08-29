@@ -19,94 +19,112 @@
 
 				{!! Form::open(['url' => route('store-trabajo'), 'class' => 'form-horizontal']) !!}
 
-   			<div class="col-md-6">
-       			<div class="form-group">
-					{!! Form::label(null, 'Mobiliario:', array('class' => 'control-label col-sm-4')) !!}
-					<div class="col-sm-8">
-						{!! Form::select('mobiliario', array('Bebederos' => 'Bebederos', 'Juegos' => 'Juegos', 'Bancos' => 'Bancos', 'Cesto' => 'Cestos', 'Estaciones Aerobicas' => 'Estaciones Aerobicas'), null ,array('class'=>'form-control', 'style' => 'width: 100%', 'id' => 'mobiliario', 'placeholder' => 'Seleccione el mobiliario...')) 
-                        !!}
+   				<div class="panel panel-primary">
+   				<div class="panel-heading">CARGAR TRABAJOS REALIZADOS EN LA PLAZA</div>
+   				<div class="panel-body">
+	       			<div class="form-group">
+						{!! Form::label(null, 'Mobiliario:', array('class' => 'control-label col-sm-2')) !!}
+						<div class="col-sm-8">
+							{!! Form::select('mobiliario', array('Bebederos' => 'Bebederos', 'Juegos' => 'Juegos', 'Bancos' => 'Bancos', 'Cesto' => 'Cestos', 'Estaciones Aerobicas' => 'Estaciones Aerobicas'), null ,array('class'=>'form-control', 'style' => 'width: 100%', 'id' => 'mobiliario', 'placeholder' => 'Seleccione el mobiliario...')) 
+	                        !!}
+						</div>
+					</div>
+					<div class="form-group">
+						{!! Form::label(null, 'Tipo de trabajo:', array('class' => 'control-label col-sm-2')) !!}
+						<div class="col-sm-8">
+
+							<div class="col-md-6">
+								{!! Form::checkbox('tipos', 'Pintura') !!}
+		                        <label>Pintura</label><br>
+
+		                        {!! Form::checkbox('tipos', 'Reparación') !!}
+		                        <label>Reparación</label><br>
+
+		                        {!! Form::checkbox('tipos', 'Herreria') !!}
+		                        <label>Herreria</label><br>
+	                        </div>
+
+	                        <div class="col-md-6">
+		                        {!! Form::checkbox('tipos', 'Instalación') !!}
+		                        <label>Instalación</label><br>
+
+		                        {!! Form::checkbox('tipos', 'Traslado') !!}
+		                        <label>Traslado</label><br>
+
+		                        {!! Form::checkbox('tipos', 'Extracción') !!}
+		                        <label>Extracción</label>
+	                        </div>
+
+
+						</div>
+					</div>
+					<div class="form-group">
+						{!! Form::label(null, 'Cuadrilla asignada:', array('class' => 'control-label col-sm-2')) !!}
+						<div class="col-sm-8">
+							{!! Form::select('cuadrilla', array('Cuadrilla de Portillo' => 'Cuadrilla de Portillo', 'Cuadrilla de Chichin' => 'Cuadrilla de Chichin'), null ,array('class'=>' form-control', 'style' => 'width: 100%', 'id' => 'cuadrilla', 'placeholder' => 'Seleccione la cuadrilla interviniente...')) 
+					        !!}
+						</div>
+					</div>
+					<div class="form-group">
+						{!! Form::label(null, 'Descripcion:', array('class' => 'control-label col-sm-2')) !!}
+						<div class="col-sm-8">
+							<textarea name="descripcion" class="form-control" rows="4" cols="50" maxlength="200" id="descripcion" placeholder="Describa el trabajo realizado."></textarea>
+						</div>	
+					</div>
+					
+
+					
+				</div>
+				<div class="panel-footer">
+					<div class="form-group">
+						{!! Form::button('+ Cargar trabajo', array('class' => 'btn btn-primary', 'id' => 'agregar', 'style' => ' margin-left: 15px;')) !!}
 					</div>
 				</div>
-				<div class="form-group">
-					{!! Form::label(null, 'Tipo de trabajo:', array('class' => 'control-label col-sm-4')) !!}
-					<div class="col-sm-8">
-						{!! Form::checkbox('tipos', 'Pintura') !!}
-                        <label>Pintura</label><br>
+				</div>
 
-                        {!! Form::checkbox('tipos', 'Reparación') !!}
-                        <label>Reparación</label><br>
+				<div class="panel panel-success">
+	   				<div class="panel-heading">REGISTRAR TRABAJOS Y ADJUNTAR IMAGENES.</div>
+	   				<div class="panel-body">
+						<div class="form-group">
+							<!-- DATATABLE ARTICULOS-->
+							<div class="box tabla-articulos">
+					            <div class="box-body no-padding">
+					                <table id="tabla-cargartrabajo" class="table table-striped table-bordered"  cellspacing="0" width="100%">
+					                    <thead>
+					                        <tr>
+					                            <th>Mobiliario</th>
+					                            <th>Tipos de trabajo</th>
+					                            <th>Cuadrilla</th>
+					                            <th>Descripción</th>
+					                            <th></th>
+					                        </tr>
+					                    </thead>
+					                </table>
+					   			</div>
+							</div>
+						</div>
 
-                        {!! Form::checkbox('tipos', 'Herreria') !!}
-                        <label>Herreria</label><br>
+						<div class="form-group">
+								<span class="label label-success" id="photocounter" style="font-size: 15px;"></span>
+					            <div class="bordedropzone">
+					               <div id="myDropZone" class="dropzone"></div>
+					            </div>
+						</div>
 
-                        {!! Form::checkbox('tipos', 'Instalación') !!}
-                        <label>Instalación</label><br>
-
-                        {!! Form::checkbox('tipos', 'Traslado') !!}
-                        <label>Traslado</label><br>
-
-                        {!! Form::checkbox('tipos', 'Extracción') !!}
-                        <label>Extracción</label>
+						<div id="fotosinput"></div>
 
 					</div>
-				</div>
-				<div class="form-group">
-					{!! Form::label(null, 'Cuadrilla asignada:', array('class' => 'control-label col-sm-4')) !!}
-					<div class="col-sm-8">
-						{!! Form::select('cuadrilla', array('Cuadrilla de Portillo' => 'Cuadrilla de Portillo', 'Cuadrilla de Chichin' => 'Cuadrilla de Chichin'), null ,array('class'=>' form-control', 'style' => 'width: 100%', 'id' => 'cuadrilla', 'placeholder' => 'Seleccione la cuadrilla interviniente...')) 
-				        !!}
+					<div class="panel-footer">
+						{{ Form::hidden('usuario', Auth::user()->id) }}
+						{{ Form::hidden('csrf-token', csrf_token(), ['id' => 'csrf-token']) }}
+						{{ Form::hidden('contadorhidden', null, ['id' => 'contadorhidden']) }}
+
+						{{ Form::submit('Finalizar', ['class'=>'btn btn-success'])}}
+						
 					</div>
-				</div>
-				<div class="form-group">
-					{!! Form::label(null, 'Descripcion:', array('class' => 'control-label col-sm-4')) !!}
-					<div class="col-sm-8">
-						<textarea name="descripcion" class="form-control" rows="4" cols="50" maxlength="200" id="descripcion" placeholder="Describa el trabajo realizado."></textarea>
-					</div>	
-				</div>
-				<div class="form-group">
-					<div class="col-sm-8">
-					{!! Form::button('+', array('class' => 'btn btn-primary', 'id' => 'agregar', '')) !!}
-					</div>
-				</div>
 
-			</div>
-			<div class="col-md-6">
-				<div class="form-group">
-					<!-- DATATABLE ARTICULOS-->
-					<div class="box tabla-articulos">
-			            <div class="box-body no-padding">
-			                <table id="tabla-cargartrabajo" class="table table-striped table-bordered"  cellspacing="0" width="100%">
-			                    <thead>
-			                        <tr>
-			                            <th>Mobiliario</th>
-			                            <th>Tipos de trabajo</th>
-			                            <th>Cuadrilla</th>
-			                            <th>Descripción</th>
-			                            <th></th>
-			                        </tr>
-			                    </thead>
-			                </table>
-			   			</div>
-					</div>
-				</div>
-
-				<div class="form-group">
-						<span class="label label-success" id="photocounter" style="font-size: 15px;"></span>
-			            <div class="bordedropzone">
-			               <div id="myDropZone" class="dropzone"></div>
-			            </div>
-				</div>
-
-				<div id="fotosinput">
-
-				</div>
-
-				{{ Form::hidden('usuario', Auth::user()->id) }}
-				{{ Form::hidden('csrf-token', csrf_token(), ['id' => 'csrf-token']) }}
-				{{ Form::hidden('contadorhidden', null, ['id' => 'contadorhidden']) }}
-
-				{{ Form::submit('Finalizar carga de trabajos', ['class'=>'btn btn-success btn-lg', 'style' => 'float: right;'])}}
 				{{ Form:: close() }}
+				
 
 			</div>
 		</div>

@@ -80,67 +80,6 @@
 
 		    map.data.addListener('click', function(event) {
                 
-                $("#salidastock").modal(); 
-                var id_plaza = event.feature.getProperty('id');  //CON ESTO OBTENEMOS CUALQUIER VALOR(Obtendria el ID aca)
-                $.getJSON("/ajax/viewplaza/" + id_plaza, function (json) { //para modal edit y add
-                   $.each(json, function(index, element) {
-                           jQuery.each(element, function( index, element) {
-                                $("#"+index).removeClass();
-                                $("#"+index).text(element);
-
-
-                                if(element == "MUY BUENO" || element == "MUY BUENA")
-                                {
-                                    $("#"+index).addClass("labelverdeosc");
-                                }
-                                else if(element == "NO PRESENTA")
-                                {
-                                    $("#"+index).addClass("labelgris");
-                                }
-                                else if(element == "BUENA" || element == "BUENO" || element == "BUEN ESTADO")
-                                {
-                                    $("#"+index).addClass("labelverde");
-
-                                }
-                                else if(element == "REGULAR")
-                                {
-                                    $("#"+index).addClass("labelnaranja");
-
-                                }
-                                else if(element == "MAL")
-                                {
-                                    $("#"+index).addClass("labelrojo");
-
-                                }
-                                else if(element == "MAL ESTADO")
-                                {
-                                    $("#"+index).addClass("labelrojo");
-
-                                }
-                                else if(element == "")
-                                {
-                                    $("#"+index).text("NO PRESENTA");
-                                    $("#"+index).addClass("labelgris");
-                                }
-                                else
-                                {
-                                    $("#"+index).addClass("otros");
-                                }                         
-                            });
-                    });
-                });
-                $.getJSON("/ajax/mobiliario/" + id_plaza, function (json) { //para modal edit y add
-                   $.each(json, function(index, element) {
-                           jQuery.each(element, function( index, element) {
-                                $("#"+index).text(element);
-
-                                if(element == "")
-                                {
-                                    return "0";
-                                }
-                            });
-                    });
-                });
 			});
             
             // global infowindow
@@ -211,6 +150,8 @@
             $('#salidastock').modal('hide');
         });
 
+        
+
         $('#tabla-movimientos').on('draw.dt', function () {
             $('.geolocalizar').click(function() {
 
@@ -231,6 +172,70 @@
                     $("html, body").animate({ scrollTop: $(document).height() }, "slow");
                     return false;
                 }
+            });
+            $(".info").click(function(){
+                $("#salidastock").modal(); 
+                var id_plaza = $(this).data("id");
+                console.log(id_plaza);
+                $.getJSON("/ajax/viewplaza/" + id_plaza, function (json) { //para modal edit y add
+                   
+                   $.each(json, function(index, element) {
+
+                           jQuery.each(element, function( index, element) {
+                                $("#"+index).removeClass();
+                                $("#"+index).text(element);
+                                if(element == "MUY BUENO" || element == "MUY BUENA")
+                                {
+                                    $("#"+index).addClass("labelverdeosc");
+                                }
+                                else if(element == "NO PRESENTA")
+                                {
+                                    $("#"+index).addClass("labelgris");
+                                }
+                                else if(element == "BUENA" || element == "BUENO" || element == "BUEN ESTADO")
+                                {
+                                    $("#"+index).addClass("labelverde");
+
+                                }
+                                else if(element == "REGULAR")
+                                {
+                                    $("#"+index).addClass("labelnaranja");
+
+                                }
+                                else if(element == "MAL")
+                                {
+                                    $("#"+index).addClass("labelrojo");
+
+                                }
+                                else if(element == "MAL ESTADO")
+                                {
+                                    $("#"+index).addClass("labelrojo");
+
+                                }
+                                else if(element == "")
+                                {
+                                    $("#"+index).text("NO PRESENTA");
+                                    $("#"+index).addClass("labelgris");
+                                }
+                                else
+                                {
+                                    $("#"+index).addClass("otros");
+                                }                         
+                            });
+                    });
+                });
+                $.getJSON("/ajax/mobiliario/" + id_plaza, function (json) { //para modal edit y add
+                   $.each(json, function(index, element) {
+                           jQuery.each(element, function( index, element) {
+                                $("#"+index).text(element);
+
+                                if(element == "")
+                                {
+                                    return "0";
+                                }
+                            });
+                    });
+                });
             });
         });
     });

@@ -192,9 +192,8 @@
 	                </table>
 	   			</div>
 			</div>
-
 		</div><!-- fin modal body -->
-
+		
 		<!-- MODAL FOOTER-->
 		<div class="modal-footer">
 		</div>
