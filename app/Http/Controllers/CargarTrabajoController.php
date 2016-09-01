@@ -46,6 +46,9 @@ class CargarTrabajoController extends Controller
 
             $master = new TrabajosMaster;
             $master->id_usuario = $request->usuario;
+            $master->id_plaza = $request->id_plaza;
+            $master->fecha = $request->fecha;
+            $master->descripcion = $request->descripciongeneral;
             $contador = $request->contadorhidden;
 
             if($contador > 0)
@@ -80,7 +83,6 @@ class CargarTrabajoController extends Controller
                                     'mobiliario'=> $request->mobiliario[$i],
                                     'tipo_trabajos'  => $request->tipos[$i],
                                     'cuadrilla' => $request->cuadrilla[$i],
-                                    'descripcion' => $request->descripcion[$i]
                                     );
                     TrabajosDetalles::create($detalles);
                 }    

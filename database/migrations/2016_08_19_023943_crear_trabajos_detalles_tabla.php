@@ -19,7 +19,6 @@ class CrearTrabajosDetallesTabla extends Migration
             $table->string('mobiliario', 60);
             $table->string('tipo_trabajos', 60);
             $table->string('cuadrilla', 60);
-            $table->string('descripcion', 255);
             $table->timestamps();
         });
     }

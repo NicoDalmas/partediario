@@ -1,4 +1,4 @@
-<div class="modal fade" id="salidastock" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade" id="informacionplazas" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 
 <div class="modal-dialog modal-lg">
 
@@ -179,14 +179,15 @@
        	 	<!-- DATATABLE ARTICULOS-->
 	       	<div class="box tabla-articulos">
 	            <div class="box-body no-padding">
-	                <table id="tabla-salidastock" class="table table-striped table-bordered"  cellspacing="0" width="100%">
+	                <table id="tabla-detalles" class="table table-striped table-bordered cambiartablaid"  cellspacing="0" width="100%">
 	                    <thead>
 	                        <tr>
-	                            <th>Trabajo Nº</th>
-	                            <th>Tipo de trabajo</th>
-	                            <th>Descripcion</th>
-	                            <th>Cuadrilla afectada</th>
-	                            <th>Acciones</th>
+	                        	<th></th>
+	                        	<th>Fecha</th>
+	                        	<th>Descripcion de los trabajos</th>
+	                            <th>Usuario</th>
+	                            <th>Nro imagenes</th>
+	                            <th></th>
 	                        </tr>
 	                    </thead>
 	                </table>

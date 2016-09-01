@@ -25,39 +25,39 @@
         </div>
     @endif
 
-	<!-- Datatables Salidas Master -->
-    <div class="box tabla-articulos">
-        <div class="box-body no-padding">
-            <table id="tabla-movimientos" class="table table-striped table-bordered"  cellspacing="0" width="100%">
-                <thead>
-                    <tr>
-                        <th>Codigo</th>
-                        <th>Nombre de la plaza</th>
-                        <th>Distrito</th>
-                        <th>Direccion</th>
-                        <th>Observaciones</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-            </table>
+    <div class="panel panel-primary">
+        <div class="panel-heading">ESPACIOS PUBLICOS DE LA CIUDAD</div>
+        <div class="panel-body">
+        	<!-- Datatables Salidas Master -->
+            <div class="box tabla-articulos">
+                <div class="box-body no-padding">
+                    <table id="tabla-movimientos" class="table table-striped table-bordered"  cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Codigo</th>
+                                <th>Nombre de la plaza</th>
+                                <th>Distrito</th>
+                                <th>Direccion</th>
+                                <th>Observaciones</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
+
 					
-	<div class="container spark-screen">
-		<div class="row">
-			<div class="col-md-10 col-md-offset-1">
-				<div class="panel panel-default">
-					<div class="panel-heading">Mapa</div>
+	<div class="panel panel-success">
+		<div class="panel-heading">MAPA INTERACTIVO</div>
+		<div class="panel-body" id="contenedormap">
+			
+		    <div id="map" style="width: auto; height: 500px; margin: 0 auto;"></div>
 
-					<div class="panel-body" id="contenedormap">
-						
-					 <div id="map" style="width: auto; height: 500px; margin: 0 auto;"></div>
-
-					</div>
-				</div>
-			</div>
 		</div>
 	</div>
+
 
     <!-- Incluir Formulario -->
     @include('modals.detallesplaza')
@@ -86,7 +86,7 @@
             var infowindow = new google.maps.InfoWindow();
 
             // When the user clicks, open an infowindow
-            map.data.addListener('mouseover', function(event) {
+            map.data.addListener('click', function(event) {
                 var myHTML = event.feature.getProperty("name")+" ("+event.feature.getProperty("codigo")+")";
                 infowindow.setContent("<div style='width:150px; text-align: center;'>"+myHTML+"</div>");
                 infowindow.setPosition(event.feature.getGeometry().get());
@@ -145,23 +145,77 @@
 
         var table = $("#tabla-movimientos").DataTable();
 
+        function initTable(id_plaza)
+        {
+            $("#tabla-detalles-"+id_plaza).DataTable({
+                "processing": true,
+                "serverSide": true,
+                "destroy": true,
+                "ajax": "/datatables/detallestrabajos/"+id_plaza,
+                "error": function () {
+                    alert("Custom error");
+                },
+                "columns":[
+                    {
+                        className:"details-control",
+                        orderable: false,
+                        searchable: false,
+                        data: null,
+                        defaultContent: ""
+                    },
+                    {data: 'fecha', name: 'trabajos_master.fecha'},
+                    {data: 'descripcion', name: 'trabajos_master.descripcion'},
+                    {data: 'name', name: 'users.name'},
+                    {data: 'imagenes', name: 'trabajos_master.imagenes'},
+                    {data: 'id_master', name: 'trabajos_master.id_master', visible: false}
+                ],
+                "order": [ 0, "desc" ],
+                "language":{
+                    url: "{!! asset('/plugins/datatables/lenguajes/spanish.json') !!}"
+                }
+            });
+        }
+
+        function format(callback, $id_master) {
+            $.ajax({
+                url: "/ajax/detallestrabajos/" + $id_master,
+                dataType: "json",
+                beforeSend: function(){
+                    callback($('<div align="center">Cargando...</div>')).show();
+                },
+                complete: function (response) {
+                    var data = JSON.parse(response.responseText);   
+                    var thead = '',  tbody = '';
+                    thead += '<th>#</th>';
+                    thead += '<th>Mobiliario</th>'; 
+                    thead += '<th>Trabajos realizados</th>'; 
+                    thead += '<th>Cuadrilla</th>'; 
+
+                    count = 1;
+                    $.each(data, function (i, d) {
+                        tbody += '<tr><td>'+ count +'</td><td>' + d.mobiliario + '</td><td>' + d.tipo_trabajos + '</td><td>'+ d.cuadrilla + '</td></tr>';
+                        count++;
+                    });
+                    callback($('<table class="table table-hover">' + thead + tbody + '</table>')).show();
+                },
+                error: function () {
+                    callback($('<div align="center">Ha ocurrido un error. Intente nuevamente y si persigue el error, contactese con informática.</div>')).show();
+                }
+            });
+        }
+       
         //Cerrar modal salidas de stock
         $(".close").click(function() {
-            $('#salidastock').modal('hide');
+            $('#informacionplazas').modal('hide');
         });
 
-        
-
         $('#tabla-movimientos').on('draw.dt', function () {
-            $('.geolocalizar').click(function() {
 
+            $('.geolocalizar').click(function() {
                 var tr = $(this).closest('tr');
                 var row = table.row(tr);
                 var latitud = parseFloat(row.data().latitud);
                 var longitud = parseFloat(row.data().longitud);
-
-
-
                 if( isNaN(longitud) || isNaN(latitud) )
                 {
                     alert("No esta georeferenciado")
@@ -173,70 +227,88 @@
                     return false;
                 }
             });
+
             $(".info").click(function(){
-                $("#salidastock").modal(); 
+
+                $("#informacionplazas").modal(); 
                 var id_plaza = $(this).data("id");
-                console.log(id_plaza);
+                $(".cambiartablaid").attr('id', "tabla-detalles-"+id_plaza);
+                initTable(id_plaza);
+
+                $("#tabla-detalles-"+id_plaza).on("click", "td.details-control", function () {
+                    var tr = $(this).closest('tr');
+                    var row = $("#tabla-detalles-"+id_plaza).DataTable().row(tr);
+                    var id_master = row.data().id_master;
+                    if (row.child.isShown()) {
+                        row.child.hide();
+                        tr.removeClass('shown');
+                    } else {
+                        format(row.child, id_master);
+                        tr.addClass('shown');
+                    }
+                });
+
                 $.getJSON("/ajax/viewplaza/" + id_plaza, function (json) { //para modal edit y add
                    
                    $.each(json, function(index, element) {
 
-                           jQuery.each(element, function( index, element) {
-                                $("#"+index).removeClass();
-                                $("#"+index).text(element);
-                                if(element == "MUY BUENO" || element == "MUY BUENA")
-                                {
-                                    $("#"+index).addClass("labelverdeosc");
-                                }
-                                else if(element == "NO PRESENTA")
-                                {
-                                    $("#"+index).addClass("labelgris");
-                                }
-                                else if(element == "BUENA" || element == "BUENO" || element == "BUEN ESTADO")
-                                {
-                                    $("#"+index).addClass("labelverde");
+                       jQuery.each(element, function( index, element) {
+                            $("#"+index).removeClass();
+                            $("#"+index).text(element);
+                            if(element == "MUY BUENO" || element == "MUY BUENA")
+                            {
+                                $("#"+index).addClass("labelverdeosc");
+                            }
+                            else if(element == "NO PRESENTA")
+                            {
+                                $("#"+index).addClass("labelgris");
+                            }
+                            else if(element == "BUENA" || element == "BUENO" || element == "BUEN ESTADO")
+                            {
+                                $("#"+index).addClass("labelverde");
 
-                                }
-                                else if(element == "REGULAR")
-                                {
-                                    $("#"+index).addClass("labelnaranja");
+                            }
+                            else if(element == "REGULAR")
+                            {
+                                $("#"+index).addClass("labelnaranja");
 
-                                }
-                                else if(element == "MAL")
-                                {
-                                    $("#"+index).addClass("labelrojo");
+                            }
+                            else if(element == "MAL")
+                            {
+                                $("#"+index).addClass("labelrojo");
 
-                                }
-                                else if(element == "MAL ESTADO")
-                                {
-                                    $("#"+index).addClass("labelrojo");
+                            }
+                            else if(element == "MAL ESTADO")
+                            {
+                                $("#"+index).addClass("labelrojo");
 
-                                }
-                                else if(element == "")
-                                {
-                                    $("#"+index).text("NO PRESENTA");
-                                    $("#"+index).addClass("labelgris");
-                                }
-                                else
-                                {
-                                    $("#"+index).addClass("otros");
-                                }                         
-                            });
+                            }
+                            else if(element == "")
+                            {
+                                $("#"+index).text("NO PRESENTA");
+                                $("#"+index).addClass("labelgris");
+                            }
+                            else
+                            {
+                                $("#"+index).addClass("otros");
+                            }                         
+                        });
                     });
                 });
                 $.getJSON("/ajax/mobiliario/" + id_plaza, function (json) { //para modal edit y add
                    $.each(json, function(index, element) {
-                           jQuery.each(element, function( index, element) {
-                                $("#"+index).text(element);
+                        jQuery.each(element, function( index, element) {
+                            $("#"+index).text(element);
 
-                                if(element == "")
-                                {
-                                    return "0";
-                                }
-                            });
+                            if(element == "")
+                            {
+                                return "0";
+                            }
+                        });
                     });
                 });
             });
+
         });
     });
     </script>

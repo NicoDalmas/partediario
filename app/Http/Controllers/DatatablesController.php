@@ -23,4 +23,12 @@ class DatatablesController extends Controller
             })
         	->make(true);
     }
+    public function trabajosCargados($id_plaza)
+    {
+        $tabladetalles = DB::table('trabajos_master')
+            ->where('trabajos_master.id_plaza', '=', $id_plaza)
+            ->join('users','trabajos_master.id_usuario', '=', 'users.id')
+            ->select(['trabajos_master.descripcion', 'trabajos_master.fecha', 'trabajos_master.imagenes', 'users.name', 'trabajos_master.id_master']);
+        return Datatables::of($tabladetalles)->make(true);
+    }
 }

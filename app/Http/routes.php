@@ -30,6 +30,9 @@ Route::get('/cargartrabajo/{id}', ['uses' => 'CargarTrabajoController@index']);
 
 Route::get('/datatables/relevamiento', ['uses' => 'DatatablesController@relevamiento']);
 
+
+Route::get('/datatables/detallestrabajos/{id_plaza}', ['uses' => 'DatatablesController@trabajosCargados']);
+
 Route::post('/movimientos/addsalida', ['as' => 'addsalida', 'uses' => 'MovimientosController@store']);
 
 Route::post('/movimientos/addtrabajo', ['as' => 'addtrabajo', 'uses' => 'CargarTrabajoController@store']);
@@ -42,6 +45,8 @@ Route::get('/ajax/viewplaza/{id}', ['uses' => 'AjaxController@getPlaza']);
 Route::get('/ajax/mobiliario/{id}', ['uses' => 'AjaxController@getMobiliario']);
 
 Route::get('/ajax/geoplazas', ['uses' => 'AjaxController@getCoordenadas']);
+
+Route::get('/ajax/detallestrabajos/{id_master}', ['uses' => 'AjaxController@getDetalles']);
 
 //IMAGENES
 

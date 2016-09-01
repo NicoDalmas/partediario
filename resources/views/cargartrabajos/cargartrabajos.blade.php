@@ -6,21 +6,51 @@
 
 @section ('contentheader_title') 
     <div class="titulo_header">
-        CARGAR TRABAJOS EN PLAZA
+        TRABAJOS REALIZADOS EN PLAZA
     </div>
 @stop
 
 @section('main-content')
+	{!! Form::open(['url' => route('store-trabajo'), 'class' => 'form-horizontal']) !!}
 	<div class="container-fluid">
-		<div class="panel panel-default">
-			<div class="panel-heading">Cargar trabajo en {!! $plaza->nombre !!} - Codigo de plaza {!! $plaza->codigo !!}</div>
 
-			<div class="panel-body">
+				<div class="panel panel-info">
+   				<div class="panel-heading">INFORMACION DEL TRABAJO</div>
+   				<div class="panel-body">
+   					{{ Form::hidden('id_plaza', $plaza->id_plaza , ['id' => 'id_plaza']) }}
+   					<div class="form-group">
+						{!! Form::label(null, 'Plaza en la que se trabajó:', array('class' => 'control-label col-sm-2')) !!}
+						<div class="col-sm-8">
+							{!! Form::text('nombreplaza', $plaza->nombre ,array('class'=>'form-control', 'style' => 'width: 100%', 'disabled' => 'true'))
+	                        !!}
+						</div>
 
-				{!! Form::open(['url' => route('store-trabajo'), 'class' => 'form-horizontal']) !!}
+					</div>
+					<div class="form-group">
+						{!! Form::label(null, 'Codigo:', array('class' => 'control-label col-sm-2')) !!}
+						<div class="col-sm-8">
+							{!! Form::text('codigo', $plaza->codigo ,array('class'=>'form-control', 'style' => 'width: 100%', 'disabled' => 'true'))
+	                        !!}
+						</div>
+					</div>
+					<div class="form-group">
+						{!! Form::label(null, 'Fecha en la que se realizó:', array('class' => 'control-label col-sm-2')) !!}
+						<div class="col-sm-8">
+							{!! Form::date('fecha', null ,array('class'=>'form-control', 'style' => 'width: 100%'))
+	                        !!}
+						</div>
+					</div>
+					<div class="form-group">
+						{!! Form::label(null, 'Descripcion general del trabajo:', array('class' => 'control-label col-sm-2')) !!}
+						<div class="col-sm-8">
+							<textarea name="descripciongeneral" class="form-control" rows="4" cols="50" maxlength="200" placeholder="Observaciones de los trabajos realizados."></textarea>
+						</div>	
+					</div>
+   				</div>
+				</div>
 
    				<div class="panel panel-primary">
-   				<div class="panel-heading">CARGAR TRABAJOS REALIZADOS EN LA PLAZA</div>
+   				<div class="panel-heading">CARGAR TRABAJOS</div>
    				<div class="panel-body">
 	       			<div class="form-group">
 						{!! Form::label(null, 'Mobiliario:', array('class' => 'control-label col-sm-2')) !!}
@@ -65,44 +95,39 @@
 					        !!}
 						</div>
 					</div>
+
 					<div class="form-group">
-						{!! Form::label(null, 'Descripcion:', array('class' => 'control-label col-sm-2')) !!}
+						<div class="col-sm-2">
+						</div>
 						<div class="col-sm-8">
-							<textarea name="descripcion" class="form-control" rows="4" cols="50" maxlength="200" id="descripcion" placeholder="Describa el trabajo realizado."></textarea>
+						{!! Form::button('+ Cargar trabajo', array('class' => 'btn btn-primary', 'id' => 'agregar', 'style' => ' margin-left: 15px;float: right;')) !!}
 						</div>	
 					</div>
 					
-
-					
-				</div>
-				<div class="panel-footer">
 					<div class="form-group">
-						{!! Form::button('+ Cargar trabajo', array('class' => 'btn btn-primary', 'id' => 'agregar', 'style' => ' margin-left: 15px;')) !!}
+						<!-- DATATABLE ARTICULOS-->
+						<div class="box tabla-articulos">
+				            <div class="box-body no-padding">
+				                <table id="tabla-cargartrabajo" class="table table-striped table-bordered"  cellspacing="0" width="100%">
+				                    <thead>
+				                        <tr>
+				                            <th>Mobiliario</th>
+				                            <th>Tipos de trabajo</th>
+				                            <th>Cuadrilla</th>
+				                            <th></th>
+				                        </tr>
+				                    </thead>
+				                </table>
+				   			</div>
+						</div>
 					</div>
+					
 				</div>
 				</div>
 
 				<div class="panel panel-success">
-	   				<div class="panel-heading">REGISTRAR TRABAJOS Y ADJUNTAR IMAGENES.</div>
+	   				<div class="panel-heading">ADJUNTAR IMAGENES.</div>
 	   				<div class="panel-body">
-						<div class="form-group">
-							<!-- DATATABLE ARTICULOS-->
-							<div class="box tabla-articulos">
-					            <div class="box-body no-padding">
-					                <table id="tabla-cargartrabajo" class="table table-striped table-bordered"  cellspacing="0" width="100%">
-					                    <thead>
-					                        <tr>
-					                            <th>Mobiliario</th>
-					                            <th>Tipos de trabajo</th>
-					                            <th>Cuadrilla</th>
-					                            <th>Descripción</th>
-					                            <th></th>
-					                        </tr>
-					                    </thead>
-					                </table>
-					   			</div>
-							</div>
-						</div>
 
 						<div class="form-group">
 								<span class="label label-success" id="photocounter" style="font-size: 15px;"></span>
@@ -224,7 +249,7 @@
             var descripcion = $("#descripcion").val();
 
        		//Validaciones antes de agregar articulos a la tabla
-            if(tipos.length != 0 && mobiliario.length != 0 && cuadrilla.length != 0 && descripcion.length != 0)
+            if(tipos.length != 0 && mobiliario.length != 0 && cuadrilla.length != 0)
             {
 	            $("#tabla-cargartrabajo").DataTable().row.add( [
 	                mobiliario+"<input type='hidden' name='mobiliario[]' value='"+mobiliario+"'>",

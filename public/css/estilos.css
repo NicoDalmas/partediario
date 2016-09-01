@@ -79,3 +79,10 @@ tr.shown td.details-control {
     border-radius: 5px;
     background: white;
 }
+td.details-control {
+    background: url('../img/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    background: url('../img/details_close.png') no-repeat center center;
+}

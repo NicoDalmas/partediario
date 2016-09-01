@@ -48,6 +48,14 @@ class AjaxController extends Controller
 
 		return Response::json($allfeatures);
     }
+    public function getDetalles($id_master)
+    {
+        $detalles=DB::table('trabajos_detalles')
+            ->where('id_master', '=', $id_master )
+            ->select('mobiliario', 'tipo_trabajos','cuadrilla')
+            ->get();
+        return Response::json($detalles);
+    }
 }
 
 
